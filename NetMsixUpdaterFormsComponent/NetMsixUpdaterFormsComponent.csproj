@@ -2,13 +2,20 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
+    <PackageVersion>0.1.0</PackageVersion>
+    <Title>Net Msix Updater Forms Component</Title>
+    <Authors>LuanRoger</Authors>
+    <Description>A component for Windows Forms using NetMsixUpdater to implement updates to Forms apps more fast.</Description>
+    <PackageProjectUrl>https://github.com/LuanRoger/NetMsixUpdaterFormsComponent</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/LuanRoger/NetMsixUpdaterFormsComponent/main/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/LuanRoger/NetMsixUpdaterFormsComponent</RepositoryUrl>
+    <PackageTags>msix;updater;windows-forms;component;windows</PackageTags>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1054.31" />
-    <PackageReference Include="NetMsixUpdater" Version="0.2.1" />
+    <PackageReference Include="NetMsixUpdater" Version="0.2.2" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,22 +1,22 @@
 using System.Reflection;
+using NetMsixUpdaterFormsComponent.Forms;
 
 namespace NetMsixUpdaterFormsComponent.Sample
 {
     public partial class Form1 : Form
     {
-        private Forms.UpdateForm updateForm { get; }
+        private UpdateForm updateForm { get; }
 
         public Form1()
         {
             InitializeComponent();
 
-            updateForm = new(new(Assembly.GetExecutingAssembly(),
-                Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + @"\update.yaml"));
+            updateForm = new(new(Assembly.GetExecutingAssembly(), Consts.YAML_UPDATE_FILE_TEXT));
         }
 
         private void Form1_Load(object sender, EventArgs e)
         { 
-            lblAssemblyVersion.Text = string.Format(lblAssemblyVersion.Text, 
+            lblAssemblyVersion.Text = string.Format(lblAssemblyVersion.Text,
                 Assembly.GetExecutingAssembly().GetName().Version);
             lblUpdated.Text = string.Format(lblUpdated.Text, updateForm.msixUpdater.hasUpdated.ToString());
         }

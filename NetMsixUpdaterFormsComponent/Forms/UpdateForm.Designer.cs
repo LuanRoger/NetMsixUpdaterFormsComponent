@@ -1,6 +1,6 @@
 ﻿namespace NetMsixUpdaterFormsComponent.Forms
 {
-    partial class UpdateForm
+    sealed partial class UpdateForm
     {
         /// <summary>
         /// Required designer variable.

@@ -6,21 +6,56 @@ using System.Windows.Forms;
 using NetMsixUpdater;
 using NetMsixUpdater.Updater.Extensions.MsixUpdater;
 using NetMsixUpdaterFormsComponent.Enum;
-using NetMsixUpdaterFormsComponent.Exceptions;
 
 namespace NetMsixUpdaterFormsComponent.Forms
 {
-    /// <summary>
-    /// Base form from MsixUpdater.
-    /// </summary>
-    public partial class UpdateForm : Form
+    public sealed partial class UpdateForm : Form
     {
+        /// <summary>
+        /// <c>MsixUpdater</c> used by the package to verify, download and install updates.
+        /// </summary>
+        /// <seealso cref="https://www.nuget.org/packages/NetMsixUpdater"/>
         public MsixUpdater msixUpdater { get; }
+        /// <summary>
+        /// Name of the program used in the main text of the window.
+        /// If null, the name chosen will be the Assembly name.
+        /// </summary>
         private string? customProgramName { get; }
+        /// <summary>
+        /// When calling the <c>Start</c> method, it shows a dialog box if the program is already updated.
+        /// Default: <c>true</c>
+        /// </summary>
         public bool showUpdateState { get; set; } = true;
+        /// <summary>
+        /// Download the update asynchronously.
+        /// Default: <c>true</c>
+        /// </summary>
         public bool asyncUpdate { get; set; } = true;
+        /// <summary>
+        /// The way the updater will handle mandatory updates.
+        /// 
+        /// <list>
+        ///     <item>
+        ///     <term>ImposibleToUse</term>
+        ///         <description>
+        ///         The user is unable to use the program.
+        ///         </description>
+        ///     </item>
+        ///     <item>
+        ///     <term>AutoUpdate</term>
+        ///         <description>
+        ///         The program is updated automatically, the user does't need to click to update manually.
+        ///         </description>
+        ///     </item>
+        /// </list>
+        /// </summary>
         public MandatoryType mandatoryType { get; set; } = MandatoryType.ImposibleToUse;
 
+        /// <summary>
+        /// Intance a new <c>UpdateForm</c>.
+        /// </summary>
+        /// <param name="msixUpdater">The instance of the <c>MsixUpdater</c> class.</param>
+        /// <param name="customProgramName">This name will override the program name of the assembly.</param>
         public UpdateForm(MsixUpdater msixUpdater, string customProgramName = null)
         {
             InitializeComponent();
@@ -49,7 +84,8 @@ namespace NetMsixUpdaterFormsComponent.Forms
         {
             if(msixUpdater.yamlUpdateInfo.mandatory && mandatoryType == MandatoryType.ImposibleToUse)
             {
-                DialogResult dialogResult = MessageBox.Show("This update is mandatory and you can't use in old version", "Information",
+                DialogResult dialogResult = MessageBox.Show("This update is mandatory and you can't use the program in an old version",
+                    "Information",
                     MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
                 if (dialogResult == DialogResult.Cancel)
@@ -58,6 +94,9 @@ namespace NetMsixUpdaterFormsComponent.Forms
             }
         }
 
+        /// <summary>
+        /// Show the update form if have any update available.
+        /// </summary>
         public void Start()
         {
             if(msixUpdater.hasUpdated)
@@ -90,6 +129,7 @@ namespace NetMsixUpdaterFormsComponent.Forms
             await updateTask;
         }
 
+        #region Events Methods
         private void UpdateExtensionOnOnDownloadStart(EventArgs e)
         {
             pgbUpdateProgress.Visible = true;
@@ -102,5 +142,6 @@ namespace NetMsixUpdaterFormsComponent.Forms
         {
             pgbUpdateProgress.Visible = false;
         }
+        #endregion
     }
 }
