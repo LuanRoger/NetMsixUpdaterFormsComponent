@@ -36,6 +36,7 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.btnUpdateNow = new System.Windows.Forms.Button();
             this.pgbUpdateProgress = new System.Windows.Forms.ProgressBar();
+            this.cmbUpdateChannels = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.wbvChangelog)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -93,6 +94,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.wbvChangelog, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.pgbUpdateProgress, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.cmbUpdateChannels, 1, 4);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -129,6 +131,17 @@
             this.pgbUpdateProgress.TabIndex = 12;
             this.pgbUpdateProgress.Visible = false;
             // 
+            // cmbUpdateChannels
+            // 
+            this.cmbUpdateChannels.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.cmbUpdateChannels.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbUpdateChannels.FormattingEnabled = true;
+            this.cmbUpdateChannels.Location = new System.Drawing.Point(248, 382);
+            this.cmbUpdateChannels.Name = "cmbUpdateChannels";
+            this.cmbUpdateChannels.Size = new System.Drawing.Size(121, 23);
+            this.cmbUpdateChannels.TabIndex = 13;
+            this.cmbUpdateChannels.SelectedIndexChanged += new System.EventHandler(this.cmbUpdateChannels_SelectedIndexChanged);
+            // 
             // UpdateForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -159,5 +172,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button btnUpdateNow;
         private System.Windows.Forms.ProgressBar pgbUpdateProgress;
+        private System.Windows.Forms.ComboBox cmbUpdateChannels;
     }
 }

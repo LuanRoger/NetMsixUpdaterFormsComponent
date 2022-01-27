@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
-    <PackageVersion>0.1.0</PackageVersion>
+    <PackageVersion>0.2.0</PackageVersion>
     <Title>Net Msix Updater Forms Component</Title>
     <Authors>LuanRoger</Authors>
     <Description>A component for Windows Forms using NetMsixUpdater to implement updates to Forms apps more fast.</Description>
@@ -14,8 +14,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1054.31" />
-    <PackageReference Include="NetMsixUpdater" Version="0.2.2" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.1072.54" />
+    <PackageReference Include="NetMsixUpdater" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>

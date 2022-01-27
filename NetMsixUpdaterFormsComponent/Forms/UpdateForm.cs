@@ -1,11 +1,16 @@
-﻿using System;
+﻿using NetMsixUpdater;
+using System;
 using System.Net;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using NetMsixUpdater;
 using NetMsixUpdater.Updater.Extensions.MsixUpdater;
+using NetMsixUpdater.YamlInfo.Models;
 using NetMsixUpdaterFormsComponent.Enum;
+
+#nullable enable
+// ReSharper disable once MemberCanBePrivate.Global
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace NetMsixUpdaterFormsComponent.Forms
 {
@@ -61,8 +66,8 @@ namespace NetMsixUpdaterFormsComponent.Forms
             InitializeComponent();
             
             this.msixUpdater = msixUpdater;
+            this.msixUpdater.Build();
             this.customProgramName = customProgramName;
-            msixUpdater.Build();
         }
 
         private void UpdateForm_Load(object sender, EventArgs e)
@@ -72,9 +77,13 @@ namespace NetMsixUpdaterFormsComponent.Forms
             
             lblUpdateInfo.Text = string.Format(lblUpdateInfo.Text, 
                 Assembly.GetExecutingAssembly().GetName().Version,
-                msixUpdater.yamlUpdateInfo.version);
+                msixUpdater.currentChannelInfo.version);
             
-            wbvChangelog.Source = new(msixUpdater.yamlUpdateInfo.changelog);
+            wbvChangelog.Source = new(msixUpdater.currentChannelInfo.changelog);
+
+            foreach (string channelName in msixUpdater.yamlUpdateInfo.channels.Keys)
+                cmbUpdateChannels.Items.Add(channelName);
+            cmbUpdateChannels.SelectedItem = msixUpdater.currentUpdateChannel;
 
             UpdateExtension.OnDownloadStart += UpdateExtensionOnOnDownloadStart;
             UpdateExtension.OnUpdateDownloadProgresssChange += UpdateExtensionOnOnUpdateDownloadProgresssChange;
@@ -82,16 +91,21 @@ namespace NetMsixUpdaterFormsComponent.Forms
         }
         private void UpdateForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if(msixUpdater.yamlUpdateInfo.mandatory && mandatoryType == MandatoryType.ImposibleToUse)
-            {
-                DialogResult dialogResult = MessageBox.Show("This update is mandatory and you can't use the program in an old version",
-                    "Information",
-                    MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (!msixUpdater.currentChannelInfo.mandatory || mandatoryType != MandatoryType.ImposibleToUse) return;
+            
+            DialogResult dialogResult = MessageBox.Show("This update is mandatory and you can't use the program in an old version",
+                "Information",
+                MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
 
-                if (dialogResult == DialogResult.Cancel)
-                    Environment.Exit(0);
-                else e.Cancel = true;
-            }
+            if (dialogResult == DialogResult.Cancel)
+                Environment.Exit(0);
+            else e.Cancel = true;
+        }
+        
+        private void cmbUpdateChannels_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            msixUpdater.currentUpdateChannel = cmbUpdateChannels.Text;
+            msixUpdater.Build();
         }
 
         /// <summary>
@@ -108,7 +122,7 @@ namespace NetMsixUpdaterFormsComponent.Forms
                 return;
             }
 
-            if (msixUpdater.yamlUpdateInfo.mandatory)
+            if (msixUpdater.currentChannelInfo.mandatory)
             {
                 MinimizeBox = false;
                 ShowDialog();
