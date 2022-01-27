@@ -12,7 +12,7 @@ namespace NetMsixUpdaterFormsComponent.Sample
         {
             InitializeComponent();
             
-            updateForm = new(new(Assembly.GetExecutingAssembly(), Consts.YAML_UPDATE_FILE_LOCAL, "prod"));
+            updateForm = new(new(Assembly.GetExecutingAssembly(), Consts.YAML_UPDATE_FILE_IN_SERVER, "prod"));
         }
 
         private void Form1_Load(object sender, EventArgs e)
