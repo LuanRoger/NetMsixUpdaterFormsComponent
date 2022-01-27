@@ -1,4 +1,5 @@
 using System.Reflection;
+using NetMsixUpdater;
 using NetMsixUpdaterFormsComponent.Forms;
 
 namespace NetMsixUpdaterFormsComponent.Sample
@@ -10,8 +11,8 @@ namespace NetMsixUpdaterFormsComponent.Sample
         public Form1()
         {
             InitializeComponent();
-
-            updateForm = new(new(Assembly.GetExecutingAssembly(), Consts.YAML_UPDATE_FILE_TEXT));
+            
+            updateForm = new(new(Assembly.GetExecutingAssembly(), Consts.YAML_UPDATE_FILE_LOCAL, "prod"));
         }
 
         private void Form1_Load(object sender, EventArgs e)
